@@ -55,9 +55,6 @@ jobs:
       shell: bash
       working-directory: ${{ github.workspace }}/build-native/
 
-    - name: Display structure of files
-      run: ls -hR
-
     - name: Build Windows
       if: matrix.os == 'windows-latest'
       run: |
@@ -66,7 +63,10 @@ jobs:
       working-directory: ${{ github.workspace }}/build-native/
 
     - name: Display structure of files
-      run: ls -hR
+      run: ls -R
+
+    # - name: Display structure of files
+    #   run: ls -hR
 
     # - name: Build 6
     #   run: |
