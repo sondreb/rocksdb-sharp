@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+      - feature/*
+#  repository_dispatch:
+#    types: [build]
+  workflow_dispatch:
+
+jobs:
+
+  buildAndUnitTest:
+
+    strategy:
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      SOLUTION_PATH: 'src/RocksDB.sln'
+      BUILD_CONFIGURATION: 'Release'
+
+    steps:
+
+    - uses: actions/checkout@v2
+      name: Checkout
+
+    - name: Variables
+      run: |
+        ROCKSDBVNUM=`cat rocksdbversion`
+        echo "##vso[task.setvariable variable=ROCKSDBVERSION]${ROCKSDBVNUM}"
+      shell: bash
