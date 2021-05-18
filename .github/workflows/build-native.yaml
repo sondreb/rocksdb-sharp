@@ -40,15 +40,22 @@ jobs:
         echo $ROCKSDBVERSION
       shell: bash
 
+    - name: Build site assets
+      working-directory: ${{ github.workspace }}
+      run: ls -la
+      continue-on-error: true
+
     - name: Display structure of files
       run: ls -R
+      continue-on-error: true
 
     - name: Build 3
       run: |
-        chmod +x ./build-native/build-rocksdb.sh
-        sh ./build-native/build-rocksdb.sh
+        chmod +x ./build-rocksdb.sh
+        sh ./build-rocksdb.sh
       shell: bash
       continue-on-error: true
+      working-directory: ${{ github.workspace }}/build-native/
 
     - name: Build 6
       run: |
