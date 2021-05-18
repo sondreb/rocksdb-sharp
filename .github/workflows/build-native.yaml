@@ -36,6 +36,9 @@ jobs:
         echo "##vso[task.setvariable variable=ROCKSDBVERSION]${ROCKSDBVNUM}"
       shell: bash
 
+    - name: Display structure of files
+      run: ls -R
+
     - name: Build
       run: |
         chmod +x "build-rocksdb.sh"
