@@ -41,9 +41,43 @@ jobs:
 
     - name: Build
       run: |
+        chmod +x "./build-native/build-rocksdb.sh"
         "./build-native/build-rocksdb.sh"
       shell: bash
       working-directory: "./build-native/"
+
+    - name: Build 2
+      run: |
+        chmod +x ./build-native/build-rocksdb.sh
+        sh ./build-native/build-rocksdb.sh
+      shell: bash
+      working-directory: ./build-native/
+
+    - name: Build 3
+      run: |
+        chmod +x ./build-native/build-rocksdb.sh
+        sh ./build-native/build-rocksdb.sh
+      shell: bash
+
+    - name: Build 4
+      run: |
+        chmod +x ./build-native/build-rocksdb.sh
+        sh ./build-native/build-rocksdb.sh
+      shell: bash
+      working-directory: "${GITHUB_WORKSPACE}"
+
+    - name: Build 5
+      run: |
+        chmod +x ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
+        sh ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
+      shell: bash
+      working-directory: "${GITHUB_WORKSPACE}"
+
+    - name: Build 6
+      run: |
+        chmod +x ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
+        sh ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
+      shell: bash
 
     # - name: Build
     #   run: |
