@@ -15,7 +15,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ windows-latest, ubuntu-latest, macos-latest ]
+        #os: [ windows-latest, ubuntu-latest, macos-latest ]
+        os: [ ubuntu-latest ]
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
@@ -37,7 +38,7 @@ jobs:
 
     - name: Build
       run: |
-        chmod +x "${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh"
-        "${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh"
+        chmod +x "build-rocksdb.sh"
+        "build-rocksdb.sh"
       shell: bash
       working-directory: "${GITHUB_WORKSPACE}/build-native/"
