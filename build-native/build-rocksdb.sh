@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ROCKSDBVNUM=`cat ../rocksdbversion`
+#ROCKSDBVNUM=`cat ../rocksdbversion`
+ROCKSDBVNUM=`6.20.3`
 ROCKSDBVERSION=v${ROCKSDBVNUM}
 SNAPPYVERSION=1.1.8
 
