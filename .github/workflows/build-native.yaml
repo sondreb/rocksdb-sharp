@@ -33,7 +33,8 @@ jobs:
     - name: Variables
       run: |
         ROCKSDBVNUM=`cat rocksdbversion`
-        echo ROCKSDBVERSION=${ROCKSDBVNUM} >> $GITHUB_ENV
+        echo ROCKSDBVERSION=$ROCKSDBVNUM >> $GITHUB_ENV
+        echo ROCKSDBVNUM
       shell: bash
 
     - name: Display structure of files
