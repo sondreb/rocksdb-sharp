@@ -15,8 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        #os: [ windows-latest, ubuntu-latest, macos-latest ]
-        os: [ ubuntu-latest ]
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
@@ -33,8 +32,12 @@ jobs:
     - name: Variables
       run: |
         ROCKSDBVNUM=`cat rocksdbversion`
-        echo ROCKSDBVERSION=$ROCKSDBVNUM >> $GITHUB_ENV
-        echo ROCKSDBVNUM
+        echo "ROCKSDBVERSION=$(cat rocksdbversion)" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Variables 2
+      run: |
+        echo $ROCKSDBVERSION
       shell: bash
 
     - name: Display structure of files
