@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #ROCKSDBVNUM=`cat ../rocksdbversion`
-ROCKSDBVNUM=`6.20.3`
-ROCKSDBVERSION=v${ROCKSDBVNUM}
+#ROCKSDBVNUM=`6.20.3`
+
+ROCKSDBVERSION=v6.20.3
 SNAPPYVERSION=1.1.8
 
 ROCKSDBREMOTE=https://github.com/facebook/rocksdb
