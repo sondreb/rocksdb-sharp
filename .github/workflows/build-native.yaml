@@ -41,7 +41,13 @@ jobs:
 
     - name: Build
       run: |
-        #chmod +x "build-rocksdb.sh"
         "./build-native/build-rocksdb.sh"
       shell: bash
-      working-directory: "${GITHUB_WORKSPACE}"
+      working-directory: "./build-native/"
+
+    # - name: Build
+    #   run: |
+    #     #chmod +x "build-rocksdb.sh"
+    #     "./build-native/build-rocksdb.sh"
+    #   shell: bash
+    #   working-directory: "${GITHUB_WORKSPACE}"
