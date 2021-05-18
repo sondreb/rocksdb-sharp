@@ -35,34 +35,45 @@ jobs:
         echo "ROCKSDBVERSION=$(cat rocksdbversion)" >> $GITHUB_ENV
       shell: bash
 
-    - name: Variables 2
+    - name: List variable
       run: |
         echo $ROCKSDBVERSION
       shell: bash
 
-    - name: Build site assets
-      working-directory: ${{ github.workspace }}
-      run: ls -la
-      continue-on-error: true
+    # - name: Display folders
+    #   working-directory: ${{ github.workspace }}
+    #   run: ls -la
 
     - name: Display structure of files
       run: ls -R
-      continue-on-error: true
 
-    - name: Build 3
+    - name: Build Linux/Mac
+      if: matrix.os != 'windows-latest'
       run: |
         chmod +x ./build-rocksdb.sh
         sh ./build-rocksdb.sh
       shell: bash
-      continue-on-error: true
       working-directory: ${{ github.workspace }}/build-native/
 
-    - name: Build 6
+    - name: Display structure of files
+      run: ls -hR
+
+    - name: Build Windows
+      if: matrix.os == 'windows-latest'
       run: |
-        chmod +x ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
-        sh ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
+        call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\Tools\\vsdevcmd" -arch=x64 && bash build-rocksdb.sh
       shell: bash
-      continue-on-error: true
+      working-directory: ${{ github.workspace }}/build-native/
+
+    - name: Display structure of files
+      run: ls -hR
+
+    # - name: Build 6
+    #   run: |
+    #     chmod +x ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
+    #     sh ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
+    #   shell: bash
+    #   continue-on-error: true
 
     # - name: Build
     #   run: |
