@@ -40,3 +40,4 @@ jobs:
         chmod +x "${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh"
         "${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh"
       shell: bash
+      working-directory: "${GITHUB_WORKSPACE}/build-native/"
