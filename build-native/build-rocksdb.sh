@@ -2,7 +2,7 @@
 
 ROCKSDBVNUM=`cat ../rocksdbversion`
 ROCKSDBVERSION=v${ROCKSDBVNUM}
-SNAPPYVERSION=1.1.8
+SNAPPYVERSION=1.1.9
 
 ROCKSDBREMOTE=https://github.com/facebook/rocksdb
 SNAPPYREMOTE=https://github.com/google/snappy
