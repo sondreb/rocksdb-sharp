@@ -80,6 +80,8 @@ jobs:
     - name: Display structure of files
       run: ls -R
 
+
+
     - uses: actions/upload-artifact@v2
       with:
         name: Blockcore-RocksDB-${{env.ROCKSDBVERSION}}-${{matrix.os}}-preview
@@ -92,9 +94,9 @@ jobs:
         files: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/librocksdb.${{ matrix.extension }}"
         draft: true
         prerelease: false
-        body: ''
+        body: 'win-x64 (.dll), linux-x64 (.so), osx-x64 (.dylip)'
         name: "Blockcore RocksDB Native (Release ${{env.ROCKSDBVERSION}})"
-        tag: ${{env.ROCKSDBVERSION}}
+        tag: ${{env.ROCKSDBVERSION}}-native
 
     # - name: Display structure of files
     #   run: ls -hR
