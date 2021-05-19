@@ -75,9 +75,6 @@ jobs:
     #     url: ${{ steps.get_release.outputs.assets_url }}
     #     folder: "./artifacts/"
 
-    - name: Display structure of files
-      run: ls -R
-
     - name: Nuget Pack
       run: dotnet build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} ${{env.PROJECT_PATH}}
 
@@ -86,8 +83,19 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBVERSION}}-${{matrix.os}}-preview
+        name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBVERSION}}-preview
         path: "${{github.workspace}}/package/"
+
+    - name: Release
+      uses: sondreb/action-release@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: "${{github.workspace}}/package/Blockcore.RocksDB.${{env.ROCKSDBVERSION}}.nupkg"
+        draft: true
+        prerelease: false
+        body: ''
+        name: "Blockcore RocksDB Nuget (Release ${{env.ROCKSDBVERSION}})"
+        tag: ${{env.ROCKSDBVERSION}}-nuget
 
 # - task: DotNetCoreCLI@2
 #   inputs:
