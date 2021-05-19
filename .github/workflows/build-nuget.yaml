@@ -16,13 +16,13 @@ jobs:
     strategy:
       matrix:
         #os: [ windows-latest, ubuntu-latest, macos-latest ]
-        os: [ ubuntu-18.04 ]
+        os: [ ubuntu-latest ]
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
 
     env:
-      SOLUTION_PATH: '/csharp/RocksDbSharp.csproj'
+      PROJECT_PATH: './csharp/RocksDbSharp.csproj'
       BUILD_CONFIGURATION: 'Release'
 
     steps:
@@ -43,11 +43,19 @@ jobs:
         echo $ROCKSDBVERSIONBASE
       shell: bash
 
-    - name: Restore
-      run: dotnet build ${{env.SOLUTION_PATH}}
+    # - name: Build
+    #   run: dotnet pack ${{env.PROJECT_PATH}}
 
-    # - name: Nuget Pack
-    #   run: dotnet pack --configuration ${{env.BUILD_CONFIGURATION}} --output "${{github.workspace}}/package/" ${{env.SOLUTION_PATH}}
+     - name: Nuget Pack
+       run: dotnet pack -p:Version=$(ROCKSDBVERSION) -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} --output "${{github.workspace}}/package/" ${{env.PROJECT_PATH}}
+
+    - name: Display structure of files
+      run: ls -R
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBVERSION}}-${{matrix.os}}-preview
+        path: "${{github.workspace}}/package/"
 
 # - task: DotNetCoreCLI@2
 #   inputs:
@@ -61,8 +69,6 @@ jobs:
 #     projects: '$(Build.SourcesDirectory)/csharp/RocksDbSharp.csproj'
 #     workingDirectory: '$(Build.SourcesDirectory)/csharp/'
 #     arguments: '-c Release /p:Version=$(ROCKSDBVERSION) /p:AllowUnsafeBlocks=True /p:LangVersion=latest'
-
-
 
     # - name: Display folders
     #   working-directory: ${{ github.workspace }}
