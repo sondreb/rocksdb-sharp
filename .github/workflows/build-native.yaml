@@ -3,8 +3,8 @@ name: Build
 on:
   push:
     branches:
-      - master2
-#      - feature/*
+      - master
+      - feature/*
 
   workflow_dispatch:
 
@@ -68,7 +68,18 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Blockcore-RocksDB-${{env.ROCKSDBVERSION}}-${{matrix.os}}-preview
-        path: "${{github.workspace}}//build-native/runtimes/"
+        path: "${{github.workspace}}/build-native/runtimes/"
+
+    - name: Release
+      uses: sondreb/action-release@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: "${{github.workspace}}/build-native/runtimes/"
+        draft: true
+        prerelease: false
+        body: ''
+        name: "Blockcore RocksDB Native (Release ${{env.ROCKSDBVERSION}})"
+        tag: ${{env.ROCKSDBVERSION}}
 
     # - name: Display structure of files
     #   run: ls -hR
