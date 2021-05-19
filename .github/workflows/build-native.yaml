@@ -1,4 +1,4 @@
-name: Build
+name: Build (Native)
 
 on:
   push:
@@ -74,7 +74,7 @@ jobs:
       uses: sondreb/action-release@master
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: "${{github.workspace}}/build-native/runtimes/"
+        folder: "${{github.workspace}}/build-native/runtimes/"
         draft: true
         prerelease: false
         body: ''
