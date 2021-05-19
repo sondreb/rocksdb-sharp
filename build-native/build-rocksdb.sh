@@ -156,17 +156,16 @@ else
         export LDFLAGS
         export ROCKSDB_DISABLE_GFLAGS=1
 
-        echo "DETECTED"
-        echo cat detected~
+        echo "DETECTING... IGNORING."
                
-        (. ./build_tools/build_detect_platform detected~; {
-            cat detected~
-            grep detected~ -e '-DLZ4'    &> /dev/null || fail "failed to detect lz4, install liblz4-dev"
-            grep detected~ -e '-DZLIB'   &> /dev/null || fail "failed to detect zlib, install libzlib-dev"
-            grep detected~ -e '-DSNAPPY' &> /dev/null || fail "failed to detect snappy, install libsnappy-dev"
-            grep detected~ -e '-DZSTD'   &> /dev/null || fail "failed to detect zstd, install libzstd-dev"
-            grep detected~ -e '-DGFLAGS' &> /dev/null && fail "gflags detected, see https://github.com/facebook/rocksdb/issues/2310" || true
-        }) || fail "dependency detection failed"
+        # (. ./build_tools/build_detect_platform detected~; {
+        #     cat detected~
+        #     grep detected~ -e '-DLZ4'    &> /dev/null || fail "failed to detect lz4, install liblz4-dev"
+        #     grep detected~ -e '-DZLIB'   &> /dev/null || fail "failed to detect zlib, install libzlib-dev"
+        #     grep detected~ -e '-DSNAPPY' &> /dev/null || fail "failed to detect snappy, install libsnappy-dev"
+        #     grep detected~ -e '-DZSTD'   &> /dev/null || fail "failed to detect zstd, install libzstd-dev"
+        #     grep detected~ -e '-DGFLAGS' &> /dev/null && fail "gflags detected, see https://github.com/facebook/rocksdb/issues/2310" || true
+        # }) || fail "dependency detection failed"
 
         echo "----- Build 64 bit --------------------------------------------------"
         make clean
