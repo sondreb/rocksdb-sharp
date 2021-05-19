@@ -15,6 +15,21 @@ jobs:
     strategy:
       matrix:
         os: [ windows-latest, ubuntu-latest, macos-latest ]
+
+        include:
+          - os: windows-latest
+            extension: ".dll"
+            runtime: "win-x64"
+            filename: "rocksdb.dll"
+          - os: ubuntu-latest
+            extension: ".so"
+            runtime: "linux-x64"
+            filename: "librocksdb.so"
+          - os: macos-latest
+            runtime: "osx-x64"
+            extension: ".dylib"
+            filename: "librocksdb.dylib"
+
         #os: [ ubuntu-latest ]
       fail-fast: false
 
@@ -74,7 +89,7 @@ jobs:
       uses: sondreb/action-release@master
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        folder: "${{github.workspace}}/build-native/runtimes/"
+        files: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/${{ matrix.filename }}"
         draft: true
         prerelease: false
         body: ''
