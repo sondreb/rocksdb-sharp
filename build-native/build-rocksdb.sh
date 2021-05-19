@@ -152,11 +152,12 @@ else
     (cd rocksdb && {
         checkout "rocksdb" "$ROCKSDBREMOTE" "$ROCKSDBVERSION" "$ROCKSDBVERSION"
 
-        echo "DOES THIS HAPPEN?"
-
         export CFLAGS
         export LDFLAGS
         export ROCKSDB_DISABLE_GFLAGS=1
+
+        echo "DETECTED"
+        echo cat detected~
                
         (. ./build_tools/build_detect_platform detected~; {
             cat detected~
