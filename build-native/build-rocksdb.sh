@@ -148,8 +148,11 @@ else
     fi
     
     mkdir -p rocksdb || fail "unable to create rocksdb directory"
+
     (cd rocksdb && {
         checkout "rocksdb" "$ROCKSDBREMOTE" "$ROCKSDBVERSION" "$ROCKSDBVERSION"
+
+        echo "DOES THIS HAPPEN?"
 
         export CFLAGS
         export LDFLAGS
