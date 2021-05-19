@@ -46,18 +46,26 @@ jobs:
     # - name: Build
     #   run: dotnet pack ${{env.PROJECT_PATH}}
 
-    - name: Get release
-      id: get_release
-      uses: bruceadams/get-release@v1.2.2
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-
-    - name: Release Download
-      uses: sondreb/action-release-download@master
+    - name: Download asset README.md from release with tag v3.0.0 
+      uses: Xotl/cool-github-releases@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        url: ${{ steps.get_release.outputs.assets_url }}
-        folder: "./artifacts/"
+        mode: download
+        tag_name: ${{env.ROCKSDBVERSION}}-native
+        assets: librocksdb.dll;librocksdb.dylib;librocksdb.so
+        github_token: ${{ github.token }}
+
+    # - name: Get release
+    #   id: get_release
+    #   uses: bruceadams/get-release@v1.2.2
+    #   env:
+    #     GITHUB_TOKEN: ${{ github.token }}
+
+    # - name: Release Download
+    #   uses: sondreb/action-release-download@master
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     url: ${{ steps.get_release.outputs.assets_url }}
+    #     folder: "./artifacts/"
 
     - name: Display structure of files
       run: ls -R
