@@ -144,6 +144,7 @@ else
         RUNTIME=linux-x64
         # Linux Dependencies    
         sudo apt-get install libsnappy-dev libbz2-dev libz-dev liblz4-dev libzstd-dev
+        sudo apt-get install libgflags-dev, zlib1g-dev
     fi
     
     mkdir -p rocksdb || fail "unable to create rocksdb directory"
