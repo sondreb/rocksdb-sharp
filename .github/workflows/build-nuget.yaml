@@ -46,13 +46,21 @@ jobs:
     # - name: Build
     #   run: dotnet pack ${{env.PROJECT_PATH}}
 
-    - name: Download asset README.md from release with tag v3.0.0 
+    - name: Download asset from release
       uses: Xotl/cool-github-releases@v1
       with:
         mode: download
         tag_name: ${{env.ROCKSDBVERSION}}-native
         assets: librocksdb.dll;librocksdb.dylib;librocksdb.so
         github_token: ${{ github.token }}
+
+    - name: Copy Native Libraries
+      run: |
+        cp "./librocksdb.dll" "${{ github.workspace }}/csharp/runtimes/win-x64/native/librocksdb.dll"
+        cp "./librocksdb.so" "${{ github.workspace }}/csharp/runtimes/linux-x64/native/librocksdb.so"
+        cp "./librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
+      shell: bash
+      #working-directory: ${{ github.workspace }}/build-native/
 
     # - name: Get release
     #   id: get_release
