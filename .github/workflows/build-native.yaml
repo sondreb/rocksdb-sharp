@@ -18,16 +18,16 @@ jobs:
 
         include:
           - os: windows-latest
-            extension: ".dll"
+            extension: "dll"
             runtime: "win-x64"
-            filename: "rocksdb.dll"
+            filename: "librocksdb.dll"
           - os: ubuntu-latest
-            extension: ".so"
+            extension: "so"
             runtime: "linux-x64"
             filename: "librocksdb.so"
           - os: macos-latest
             runtime: "osx-x64"
-            extension: ".dylib"
+            extension: "dylib"
             filename: "librocksdb.dylib"
 
         #os: [ ubuntu-latest ]
@@ -89,7 +89,7 @@ jobs:
       uses: sondreb/action-release@master
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/${{ matrix.filename }}"
+        files: "${{github.workspace}}/build-native/runtimes/${{ matrix.runtime }}/native/librocksdb.${{ matrix.extension }}"
         draft: true
         prerelease: false
         body: ''
