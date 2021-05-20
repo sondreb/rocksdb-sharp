@@ -20,7 +20,7 @@ This is now buildable on Windows thanks to the Bing team at Microsoft who are ac
 2. Run git's ```bash.exe```
 3. execute ```./build-rocksdb.sh```
 
-This will create a rocksdb.dll and copy it to the where the .sln file is expecting it to be.  (If you only need to run this in Windows, you can remove the references to the other two platform binaries from the .sln)
+This will create a librocksdb.dll and copy it to the where the .sln file is expecting it to be.  (If you only need to run this in Windows, you can remove the references to the other two platform binaries from the .sln)
 
 ### Linux Native Build Instructions
 
