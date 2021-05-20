@@ -5,8 +5,7 @@ on:
     branches:
       - master
       - feature/*
-#  repository_dispatch:
-#    types: [build]
+
   workflow_dispatch:
 
 jobs:
@@ -43,9 +42,6 @@ jobs:
         echo $ROCKSDBVERSIONBASE
       shell: bash
 
-    # - name: Build
-    #   run: dotnet pack ${{env.PROJECT_PATH}}
-
     - name: Download asset from release
       uses: Xotl/cool-github-releases@v1
       with:
@@ -60,20 +56,6 @@ jobs:
         cp "./librocksdb.so" "${{ github.workspace }}/csharp/runtimes/linux-x64/native/librocksdb.so"
         cp "./librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
       shell: bash
-      #working-directory: ${{ github.workspace }}/build-native/
-
-    # - name: Get release
-    #   id: get_release
-    #   uses: bruceadams/get-release@v1.2.2
-    #   env:
-    #     GITHUB_TOKEN: ${{ github.token }}
-
-    # - name: Release Download
-    #   uses: sondreb/action-release-download@master
-    #   with:
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     url: ${{ steps.get_release.outputs.assets_url }}
-    #     folder: "./artifacts/"
 
     - name: Run CodeGen
       run: dotnet run ${{ github.workspace }}/build-codegen/CSharpGen.csproj
@@ -100,146 +82,3 @@ jobs:
         body: ''
         name: "Blockcore RocksDB Nuget (Release ${{env.ROCKSDBVERSION}})"
         tag: ${{env.ROCKSDBVERSION}}-nuget
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'run'
-#     projects: '$(Build.SourcesDirectory)/build-codegen/CSharpGen.csproj'
-#     workingDirectory: '$(Build.SourcesDirectory)/build-codegen/'
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'build'
-#     projects: '$(Build.SourcesDirectory)/csharp/RocksDbSharp.csproj'
-#     workingDirectory: '$(Build.SourcesDirectory)/csharp/'
-#     arguments: '-c Release /p:Version=$(ROCKSDBVERSION) /p:AllowUnsafeBlocks=True /p:LangVersion=latest'
-
-    # - name: Display folders
-    #   working-directory: ${{ github.workspace }}
-    #   run: ls -la
-
-    # - name: Display structure of files
-    #   run: ls -R
-
-    # - name: Build Linux/Mac
-    #   if: matrix.os != 'windows-latest'
-    #   run: |
-    #     chmod +x ./build-rocksdb.sh
-    #     sh ./build-rocksdb.sh
-    #   shell: bash
-    #   working-directory: ${{ github.workspace }}/build-native/
-
-    # - name: Build Windows
-    #   if: matrix.os == 'windows-latest'
-    #   run: |
-    #     call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\Tools\\vsdevcmd" -arch=x64 && bash build-rocksdb.sh
-    #   shell: cmd
-    #   working-directory: ${{ github.workspace }}/build-native/
-
-    # - name: Display structure of files
-    #   run: ls -R
-
-    # - uses: actions/upload-artifact@v2
-    #   with:
-    #     name: Blockcore-RocksDB-${{env.ROCKSDBVERSION}}-${{matrix.os}}-preview
-    #     path: "${{github.workspace}}//build-native/runtimes/"
-
-    # - name: Display structure of files
-    #   run: ls -hR
-
-    # - name: Build 6
-    #   run: |
-    #     chmod +x ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
-    #     sh ${GITHUB_WORKSPACE}/build-native/build-rocksdb.sh
-    #   shell: bash
-    #   continue-on-error: true
-
-    # - name: Build
-    #   run: |
-    #     #chmod +x "build-rocksdb.sh"
-    #     "./build-native/build-rocksdb.sh"
-    #   shell: bash
-    #   working-directory: "${GITHUB_WORKSPACE}"
-
-
-
-
-
-# trigger:
-# - master
-
-# pool:
-#   vmImage: 'ubuntu-latest'
-
-# steps:
-
-# - task: Bash@3
-#   inputs:
-#     targetType: 'inline'
-#     script: |
-#       ROCKSDBVNUM=`cat rocksdbversion`
-#       echo "##vso[task.setvariable variable=ROCKSDBVERSION]${ROCKSDBVNUM}.$(build.buildId)"
-#       echo "##vso[task.setvariable variable=ROCKSDBVERSIONBASE]${ROCKSDBVNUM}"
-#     workingDirectory: '$(Build.SourcesDirectory)'
-
-# - task: NuGetToolInstaller@1
-
-# - task: UseDotNet@2
-#   displayName: 'Use .NET Core sdk'
-#   inputs:
-#     packageType: sdk
-#     version: 5.0.102
-#     installationPath: $(Agent.ToolsDirectory)/dotnet
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'run'
-#     projects: '$(Build.SourcesDirectory)/build-codegen/CSharpGen.csproj'
-#     workingDirectory: '$(Build.SourcesDirectory)/build-codegen/'
-    
-# - task: AzureCLI@1
-#   inputs:
-#     azureSubscription: 'Pay-As-You-Go(df68d6af-9145-400b-9276-6a84ca4dec2b)'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: 'az storage blob download -f $(Build.SourcesDirectory)/csharp/runtimes/win-x64/native/rocksdb.dll --account-name curiositydev  -c rocksdb  -n rocksdb-v$(ROCKSDBVERSIONBASE).dll'
-
-# - task: AzureCLI@1
-#   inputs:
-#     azureSubscription: 'Pay-As-You-Go(df68d6af-9145-400b-9276-6a84ca4dec2b)'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: 'az storage blob download -f $(Build.SourcesDirectory)/csharp/runtimes/linux-x64/native/librocksdb.so --account-name curiositydev  -c rocksdb  -n librocksdb-v$(ROCKSDBVERSIONBASE).so'
-
-# - task: AzureCLI@1
-#   inputs:
-#     azureSubscription: 'Pay-As-You-Go(df68d6af-9145-400b-9276-6a84ca4dec2b)'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: 'az storage blob download -f $(Build.SourcesDirectory)/csharp/runtimes/osx-x64/native/librocksdb.dylib --account-name curiositydev  -c rocksdb  -n librocksdb-v$(ROCKSDBVERSIONBASE).dylib'
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'build'
-#     projects: '$(Build.SourcesDirectory)/csharp/RocksDbSharp.csproj'
-#     workingDirectory: '$(Build.SourcesDirectory)/csharp/'
-#     arguments: '-c Release /p:Version=$(ROCKSDBVERSION) /p:AllowUnsafeBlocks=True /p:LangVersion=latest'
-
-# - task: CmdLine@2
-#   inputs:
-#     script: 'ls $(Build.SourcesDirectory) -hR'
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'pack'
-#     packagesToPack: '$(Build.SourcesDirectory)/csharp/RocksDbSharp.csproj'
-#     configuration: 'Release'
-#     versioningScheme: 'off'
-#     buildProperties: 'Version="$(ROCKSDBVERSION)";AllowUnsafeBlocks="True";LangVersion="latest"'
-
-# - task: CmdLine@2
-#   inputs:
-#     script: 'ls $(Build.SourcesDirectory) -hR'
-
-# - task: NuGetCommand@2
-#   inputs:
-#     command: 'push'
-#     packagesToPush: '**/*.nupkg'
-#     nuGetFeedType: 'external'
-#     publishFeedCredentials: 'nuget-curiosity'
