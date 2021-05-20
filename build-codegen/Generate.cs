@@ -510,6 +510,12 @@ namespace RocksDbPrepareCApiHeader
                 var managedArgLines = string.Join(",", args.Select(arg => $"\n    {arg}"));
                 var isUnsafe = managedArgLines.Contains("*");
                 string bodyText = body == null ? ";" : $"\n{body}";
+
+                if (managedArgLines.EndsWith("void p0"))
+                {
+                    managedArgLines = string.Empty;
+                }
+
                 return $"{comment.If(c => !string.IsNullOrEmpty(c)).Then(c => $"{c}\n").OrElse("")}public {(isUnsafe ? "unsafe " : "")}{(body == null ? "abstract " : "")}{returnType} {name}({managedArgLines}){bodyText}\n";
             }
         }
