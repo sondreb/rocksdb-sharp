@@ -50,7 +50,7 @@ jobs:
       uses: Xotl/cool-github-releases@v1
       with:
         mode: download
-        tag_name: ${{env.ROCKSDBVERSION}}-native
+        tag_name: ${{env.ROCKSDBVERSIONBASE}}-native
         assets: librocksdb.dll;librocksdb.dylib;librocksdb.so
         github_token: ${{ github.token }}
 
