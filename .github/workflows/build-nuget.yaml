@@ -75,6 +75,10 @@ jobs:
     #     url: ${{ steps.get_release.outputs.assets_url }}
     #     folder: "./artifacts/"
 
+    - name: Run CodeGen
+      run: dotnet run ${{ github.workspace }}/build-codegen/CSharpGen.csproj
+      working-directory: "${{ github.workspace }}/build-codegen/"
+
     - name: Nuget Pack
       run: dotnet build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} ${{env.PROJECT_PATH}}
 
